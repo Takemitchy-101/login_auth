@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:log_auth/Screens/hamePage.dart';
 import 'package:log_auth/Screens/loginPage.dart';
@@ -21,20 +20,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isLoading = false;
 
   void signUpUser() async {
-    String res = await AuthService().signUpuser(
+    String res = await AuthService().signUpUser(
         email: emailController.text,
         password: passwordController.text,
         name: nameController.text);
 
+         print('SignUp Result: $res');
+
     // if signUp is Success then user can be navigate to the different page
-    if (res == "successfully") {
+    if (res == "success") {
+        print('Navigation to HomePage');
       setState(() {
         isLoading = true;
       });
 
       //navigate to next screen
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => HomePage(),
+        builder: (context) =>  const HomePage(),
       ));
     }
     // other wise show the error message
@@ -78,10 +80,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               InputTextField(
                   textEditingController: passwordController,
                   hintText: "Enter Your Password",
+                  isPass: true,
                   icon: Icons.lock),
 
               MyButton(
-                onTap: () => signUpUser,
+                onTap: signUpUser,
                 text: "Sign Up",
               ),
 

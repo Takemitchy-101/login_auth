@@ -5,7 +5,7 @@ class InputTextField extends StatelessWidget {
   final bool isPass;
   final String hintText;
   final IconData icon;
-
+  
   const InputTextField({
     super.key,
     required this.textEditingController,

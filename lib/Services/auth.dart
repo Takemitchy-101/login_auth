@@ -9,7 +9,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //for signUp
-  Future<String> signUpuser(
+  Future<String> signUpUser(
       {required String email,
       required String password,
       required String name}) async {
@@ -27,10 +27,34 @@ class AuthService {
         'email': email,
         'uid': credential.user!.uid,
       });
-      res = "Succesfully";
+      res = "success";
     } catch (e) {
-      print(e.toString());
+      return e.toString();
     }
     return res;
+  }
+
+  // log in
+  Future<String> loginUser(
+      {required String email, required String password}) async {
+    String res = "Some Error Occured";
+
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = "success";
+      } else {
+        res = "Please Enter All The Fields";
+      }
+    } catch (e) {
+      return e.toString();
+    }
+    return res;
+  }
+
+  //for logout
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
